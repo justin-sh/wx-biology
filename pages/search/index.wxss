@@ -1,0 +1,23 @@
+.search-view{
+  padding: 10rpx;
+  /* border: 1rpx solid red; */
+}
+
+.search-view input{
+  /* display: inline-block; */
+  height: 70rpx;
+  width: 590rpx;
+  display: inline-block;
+  background-color: white;
+}
+
+.search-view button{
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  padding-left: 15rpx;
+}
+
+.result-view{
+  /* border: 1rpx solid red; */
+}

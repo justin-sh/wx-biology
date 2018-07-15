@@ -1,0 +1,41 @@
+<!--pages/search/index.wxml-->
+<view class='container'>
+  <view class='search-view'>
+    <input confirm-type='search' focus='true' placeholder='Search Text' bindconfirm="search"></input>
+    <button size='mini' plain='true'>Cancel</button>
+  </view>
+  <scroll-view class="result-view" scroll-y="true">
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+    <view>1231</view>
+    <view>22222</view>
+    <view>33333</view>
+    <view>4444</view>
+    <view>5555</view>
+  </scroll-view>
+</view>
