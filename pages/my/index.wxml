@@ -1,0 +1,8 @@
+<view class="container">
+
+  <view class='nav'>
+    <navigator url='/pages/my/fav/index'>Favorites</navigator>
+    <navigator url='/pages/my/log/index'>Logs</navigator>
+    <navigator url='/pages/my/settings/index'>Settings</navigator>
+  </view>
+</view>

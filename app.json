@@ -1,8 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/search/index"
+    "pages/search/index",
+    "pages/my/settings/index",
+    "pages/my/fav/index",
+    "pages/my/index",
+    "pages/my/log/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

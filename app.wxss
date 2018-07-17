@@ -29,12 +29,14 @@ form{
 
 .container {
   height: 100%;
-  width: 100%;
-  padding:0rpx 10rpx;
+  width: 96%;
+  /* padding:0rpx; */
+  margin: 0rpx auto;
   /* display: flex; */
   /* flex-direction: column; */
   /* align-items: center; */
   /* justify-content: space-between; */
   /* padding: 10rpx; */
   /* box-sizing: border-box; */
+  /* border: 1rpx solid red; */
 }

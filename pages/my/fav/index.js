@@ -1,14 +1,11 @@
-// pages/search/index.js
+// pages/my/fav/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  },
-
-  tmpData:{
-    k:''
+  
   },
 
   /**
@@ -65,22 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  search:function(e){
-    var k = e.detail.value
-    console.log(`will search for ${k}`)
-  },
-
-  clearSearch:function(e){
-    if(this.tmpData.k){
-      this.setData({
-        k:''
-      })
-    }
-
-  },
-  sBlur:function(e){
-    this.tmpData['k'] = e.detail.value
   }
 })

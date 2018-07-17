@@ -1,8 +1,8 @@
 <!--pages/search/index.wxml-->
 <view class='container'>
   <view class='search-view'>
-    <input confirm-type='search' focus='true' placeholder='Search Text' bindconfirm="search"></input>
-    <button size='mini' plain='true'>Cancel</button>
+    <input confirm-type='search' focus='true' placeholder='Search Text' bindconfirm="search" bindblur='sBlur' value='{{k}}'></input>
+    <button size='mini' plain='true' bindtap='clearSearch'>Clear</button>
   </view>
   <scroll-view class="result-view" scroll-y="true">
     <view>1231</view>

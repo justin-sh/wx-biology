@@ -12,6 +12,5 @@
   </view>
   <view class='nav'>
     <navigator url='/pages/search/index'>Search</navigator>
-    <navigator url='/pages/logs/logs'>启动日志</navigator>
   </view>
 </view>

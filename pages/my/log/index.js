@@ -1,21 +1,23 @@
-// pages/search/index.js
+const util = require('../../../utils/util.js')
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  },
-
-  tmpData:{
-    k:''
+  
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.setData({
+      logs: (wx.getStorageSync('logs') || []).map(log => {
+        return "Log at " + util.formatTime(new Date(log))
+      })
+    })  
   },
 
   /**
@@ -65,22 +67,5 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  search:function(e){
-    var k = e.detail.value
-    console.log(`will search for ${k}`)
-  },
-
-  clearSearch:function(e){
-    if(this.tmpData.k){
-      this.setData({
-        k:''
-      })
-    }
-
-  },
-  sBlur:function(e){
-    this.tmpData['k'] = e.detail.value
   }
 })
