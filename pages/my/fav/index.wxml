@@ -1,2 +1,7 @@
-<!--pages/my/fav/index.wxml-->
-<text>pages/my/fav/index.wxml</text>
+<view class="container">
+  <view class='fav-list'>
+    <block wx:for="{{items}}" wx:for-item="i" wx:key="fav-i">
+      <text class="fav-item">{{index + 1}}. {{i}}</text>
+    </block>
+  </view>
+</view>

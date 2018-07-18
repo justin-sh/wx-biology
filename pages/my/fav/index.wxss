@@ -1,1 +1,8 @@
-/* pages/my/fav/index.wxss */
+.fav-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+.fav-item {
+  margin: 10rpx;
+}

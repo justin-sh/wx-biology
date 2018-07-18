@@ -46,6 +46,9 @@ Page({
   getUserInfox: function(e) {
     console.log("getUserInfo in page home:"+JSON.stringify(e))
 
+    if(e.detail.errMsg){
+      return
+    }
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
