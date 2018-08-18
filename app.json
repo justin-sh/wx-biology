@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/home/index",
     "pages/index/index",
     "pages/search/index",
     "pages/my/settings/index",
@@ -10,8 +11,9 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "小小物种",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "陆投小帮手",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh" :true
   },
   "debug": true
 }

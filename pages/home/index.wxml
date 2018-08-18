@@ -1,0 +1,14 @@
+<view class='container'>
+  <view class='base-info'>
+    <view class='row'>
+      <view>当前安E转让笔数 {{totalCount}} 笔</view>
+      <!-- <button size='mini' bindtap="goTest">Go</button> -->
+    </view>
+    <view class='row'>
+      <view>当前安E转让成功率 {{succRate}} %</view>
+    </view>
+  </view>
+  <view class='canvas'>
+    <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+  </view>
+</view>
