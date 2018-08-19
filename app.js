@@ -35,6 +35,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    host:'https://www.zdic.cn',
   }
 })

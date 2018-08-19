@@ -2,7 +2,7 @@
   <view class='base-info'>
     <view class='row'>
       <view>当前安E转让笔数 {{totalCount}} 笔</view>
-      <!-- <button size='mini' bindtap="goTest">Go</button> -->
+      <!-- <button size='mini' bindtap="goTest">Refresh</button> -->
     </view>
     <view class='row'>
       <view>当前安E转让成功率 {{succRate}} %</view>

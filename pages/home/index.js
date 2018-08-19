@@ -1,156 +1,178 @@
 import * as echarts from '../../ec-canvas/echarts';
+const util = require('../../utils/util.js')
 
-function initChart(canvas, width, height) {
-  const chart = echarts.init(canvas, null, {
-    width: width,
-    height: height
-  });
-  canvas.setChart(chart);
+const app = getApp();
 
-  var option = {
-    title: {
-      text: '转让笔数趋势图',
-      left: 'center'
+Page({
+  data: {
+    xInterval: 5,
+    xLabelInterval: 59,
+    totalCount: '-',
+    succRate: '-',
+    ec: {
+      lazyLoad: true,
     },
-    color: ["#37A2DA", "#67E0E3", "#9FE6B8"],
-    legend: {
-      data: ['T日', 'T-1日', 'T-7日'],
-      top: 35,
-      left: 'center',
-      z: 100
-    },
-    grid: {
-      containLabel: true
-    },
+    // pullCnt:0
+  },
 
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['00', '03', '06', '09', '12', '15', '18', '21', '24'],
-      // show: false
-    },
-    yAxis: {
-      x: 'center',
-      type: 'value',
-      splitLine: {
-        lineStyle: {
-          type: 'dashed'
+  onReady: function() {
+    this.ec = this.selectComponent('#mychart-dom-line');
+    this.refreshData({
+      first: true
+    });
+  },
+
+  onPullDownRefresh: function() {
+    // this.setData({
+    //   pullCnt: this.data.pullCnt+1
+    // })
+    wx.stopPullDownRefresh();
+    this.refreshData()
+  },
+
+  goTest: function() {
+    // wx.navigateTo({
+    //   url: '../index/index',
+    // })
+    wx.startPullDownRefresh()
+    console.log(this.chart)
+    this.refreshData();
+  },
+
+  refreshData: function(opt) {
+    wx.showLoading({
+      mask: true
+    })
+    opt = opt || {}
+    let first = opt.first || false;
+    let that = this;
+    wx.request({
+      url: `${app.globalData.host}/amz/lu/product-count?first=${first}&_=${+new Date}`,
+      success: function(d) {
+        console.log(d)
+        d.ok = d.statusCode === 200;
+        if (d.ok) {
+          that.setData({
+            totalCount: d.data.totalCount,
+            succRate: Math.round(d.data.successRate[0].avgSuccessRatio * 10000) / 100,
+          })
+          if (first) {
+            that.initChart({
+              data: d.data
+            })
+          } else {
+            that.updateChart({
+              data: d.data
+            });
+          }
+        }
+
+        if (typeof opt.success === 'function') {
+          opt.success(d)
+        }
+      },
+      complete: function() {
+        wx.hideLoading()
+        if (typeof opt.complete === 'function') {
+          opt.complete();
         }
       }
-      // show: false
-    },
-    series: [{
-      name: 'T日',
-      type: 'line',
-      smooth: true,
-      data: [1, 3, 18, 36, 65, 30]
-    }, {
-      name: 'T-1日',
-      type: 'line',
-      smooth: true,
-      data: [2, 3, 5, 12, 50, 51, 35, 70, 30, 20]
-    }, {
-      name: 'T-7日',
-      type: 'line',
-      smooth: true,
-      data: [10, 30, 31, 50, 40, 20, 10]
-    }]
-  };
+    })
+  },
 
-  chart.setOption(option);
-  return chart;
-}
+  initChart: function(res) {
+    this.ec.init((canvas, width, height) => {
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+      });
 
-// pages/index/index.js
-Page({
+      var xData = [];
+      let d = new Date(2018, 1, 1);
+      for (let i = 0; i < 24 * 60; i++) {
+        d.setMinutes(i);
+        xData.push(util.formatHm(d))
+        i = i + this.data.xInterval - 1;
+      }
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    totalCount: 10,
-    succRate : 72.92,
-    ec: {
-      onInit: initChart
+      var option = {
+        title: {
+          text: '转让笔数趋势图',
+          left: 'center'
+        },
+        legend: {
+          data: ['T日', 'T-1日', 'T-7日'],
+          top: 35,
+          left: 'center',
+          z: 100
+        },
+        grid: {
+          bottom: 15,
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: xData,
+          axisLabel: {
+            interval: this.data.xLabelInterval,
+          }
+        },
+        yAxis: {
+          x: 'center',
+          type: 'value',
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        },
+        series: [{
+          name: 'T日',
+          type: 'line',
+          smooth: true,
+          data: this.getValidSeriesData(res.data.d0)
+        }, {
+          name: 'T-1日',
+          type: 'line',
+          smooth: true,
+          data: this.getValidSeriesData(res.data.d1)
+        }, {
+          name: 'T-7日',
+          type: 'line',
+          smooth: true,
+          data: this.getValidSeriesData(res.data.d7)
+        }]
+      };
+      chart.setOption(option);
+      return chart;
+    });
+  },
+
+  updateChart: function(d) {
+    var option = {
+      series: [{
+        name: 'T日',
+        data: this.getValidSeriesData(d.data.d0)
+      }, {
+        name: 'T-1日',
+        data: this.getValidSeriesData(d.data.d1)
+      }, {
+        name: 'T-7日',
+        data: this.getValidSeriesData(d.data.d7)
+      }]
+    };
+
+    this.ec.chart.setOption(option);
+  },
+
+  getValidSeriesData: function(ds) {
+    let r = [];
+    for (let x in ds) {
+      if (x.endsWith('0') || x.endsWith('5')) {
+        r.push(ds[x])
+      }
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-    console.log("onPullDownRefresh");
-    // wx.showToast({
-    //   title: 'Loading',
-    //   icon: 'loading',
-    //   duration: 500
-    // })
-    var tc = this.data.totalCount;
-    tc = tc + Math.round(Math.random()*10);
-    this.setData({
-      totalCount: tc
-    })
-    wx.stopPullDownRefresh();
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
-
-  refresh: function() {
-    console.log(new Date())
-    this.setData({
-      totalCount: 30
-    })
-  },
-  goTest: function() {
-    wx.navigateTo({
-      url: '../index/index',
-    })
+    return r;
   }
 })
