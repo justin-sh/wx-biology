@@ -49,7 +49,7 @@ Page({
     wx.request({
       url: `${app.globalData.host}/amz/lu/product-count?first=${first}&_=${+new Date}`,
       success: function(d) {
-        console.log(d)
+        // console.log(d)
         d.ok = d.statusCode === 200;
         if (d.ok) {
           that.setData({
@@ -89,10 +89,10 @@ Page({
 
       var xData = [];
       let d = new Date(2018, 1, 1);
-      for (let i = 0; i < 24 * 60; i++) {
-        d.setMinutes(i);
+      let t = d.getTime();
+      for (let i = 0; i <= 24 * 60; i = i + this.data.xInterval) {
+        d.setTime(t+i*60*1000);
         xData.push(util.formatHm(d))
-        i = i + this.data.xInterval - 1;
       }
 
       var option = {
@@ -101,7 +101,7 @@ Page({
           left: 'center'
         },
         legend: {
-          data: ['T日', 'T-1日', 'T-7日'],
+          data: ['今天', '昨天', '一周前'],
           top: 35,
           left: 'center',
           z: 100
@@ -128,17 +128,17 @@ Page({
           }
         },
         series: [{
-          name: 'T日',
+          name: '今天',
           type: 'line',
           smooth: true,
           data: this.getValidSeriesData(res.data.d0)
         }, {
-          name: 'T-1日',
+          name: '昨天',
           type: 'line',
           smooth: true,
           data: this.getValidSeriesData(res.data.d1)
         }, {
-          name: 'T-7日',
+          name: '一周前',
           type: 'line',
           smooth: true,
           data: this.getValidSeriesData(res.data.d7)
@@ -152,13 +152,13 @@ Page({
   updateChart: function(d) {
     var option = {
       series: [{
-        name: 'T日',
+        name: '今天',
         data: this.getValidSeriesData(d.data.d0)
       }, {
-        name: 'T-1日',
+        name: '昨天',
         data: this.getValidSeriesData(d.data.d1)
       }, {
-        name: 'T-7日',
+        name: '一周前',
         data: this.getValidSeriesData(d.data.d7)
       }]
     };
