@@ -30,6 +30,15 @@ Page({
     this.refreshData()
   },
 
+  onShareAppMessage: function (res) {
+    return {
+      title: '陆投小帮手',
+      path: '/pages/home/index',
+      success: function () { },
+      fail: function () { }
+    }
+  },
+
   goTest: function() {
     // wx.navigateTo({
     //   url: '../index/index',
