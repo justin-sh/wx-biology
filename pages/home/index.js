@@ -26,8 +26,14 @@ Page({
     // this.setData({
     //   pullCnt: this.data.pullCnt+1
     // })
-    wx.stopPullDownRefresh();
-    this.refreshData()
+    wx.showNavigationBarLoading();
+    // wx.stopPullDownRefresh();
+    this.refreshData({
+      complete:function(){
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh();
+      }
+    })
   },
 
   onShareAppMessage: function (res) {
@@ -49,9 +55,9 @@ Page({
   },
 
   refreshData: function(opt) {
-    wx.showLoading({
-      mask: true
-    })
+    // wx.showLoading({
+    //   mask: true
+    // })
     opt = opt || {}
     let first = opt.first || false;
     let that = this;
@@ -81,7 +87,7 @@ Page({
         }
       },
       complete: function() {
-        wx.hideLoading()
+        // wx.hideLoading()
         if (typeof opt.complete === 'function') {
           opt.complete();
         }
