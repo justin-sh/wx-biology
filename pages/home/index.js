@@ -13,12 +13,18 @@ Page({
       lazyLoad: true,
     },
     // pullCnt:0
+    isFirst : true
   },
 
-  onReady: function() {
+  onReady: function () {
+    wx.showLoading({
+      mask: true
+    })
     this.ec = this.selectComponent('#mychart-dom-line');
     this.refreshData({
-      first: true
+      complete:function(){
+        wx.hideLoading()
+      }
     });
   },
 
@@ -29,9 +35,9 @@ Page({
     wx.showNavigationBarLoading();
     // wx.stopPullDownRefresh();
     this.refreshData({
-      complete:function(){
-        wx.hideNavigationBarLoading();
+      complete: function () {
         wx.stopPullDownRefresh();
+        wx.hideNavigationBarLoading();
       }
     })
   },
@@ -59,10 +65,10 @@ Page({
     //   mask: true
     // })
     opt = opt || {}
-    let first = opt.first || false;
+    let first = this.data.isFirst;
     let that = this;
     wx.request({
-      url: `${app.globalData.host}/amz/lu/product-count?first=${first}&_=${+new Date}`,
+      url: `${app.globalData.host}/lu/product-count?first=${first}&_=${+new Date}`,
       success: function(d) {
         // console.log(d)
         d.ok = d.statusCode === 200;
@@ -71,7 +77,8 @@ Page({
             totalCount: d.data.totalCount,
             succRate: Math.round(d.data.successRate[0].avgSuccessRatio * 10000) / 100,
           })
-          if (first) {
+          // if(this.data.isFirst)
+          if (that.data.isFirst) {
             that.initChart({
               data: d.data
             })
@@ -162,6 +169,9 @@ Page({
       chart.setOption(option);
       return chart;
     });
+    this.setData({
+      isFirst:false
+    })
   },
 
   updateChart: function(d) {

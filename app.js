@@ -36,6 +36,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    host:'https://www.zdic.cn',
+    host:'https://www.zdic.cn/amz',
   }
 })
