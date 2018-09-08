@@ -5,15 +5,23 @@ const app = getApp();
 
 Page({
   data: {
-    xInterval: 5,
-    xLabelInterval: 59,
+    xInterval: 10,
+    xLabelInterval: 29,
     totalCount: '-',
     succRate: '-',
+    count1: 0,
+    count3: 0,
+    count5: 0,
+    count10: 0,
+    count99: 0,
     ec: {
       lazyLoad: true,
     },
     // pullCnt:0
-    isFirst : true
+    isFirst : true,
+    d0 : [],
+    d1 : [],
+    d7 : []
   },
 
   onReady: function () {
@@ -68,14 +76,19 @@ Page({
     let first = this.data.isFirst;
     let that = this;
     wx.request({
-      url: `${app.globalData.host}/lu/product-count?first=${first}&_=${+new Date}`,
+      url: `${app.globalData.host}/lu/product-count?all=${first}&_=${+new Date}`,
       success: function(d) {
         // console.log(d)
         d.ok = d.statusCode === 200;
         if (d.ok) {
           that.setData({
             totalCount: d.data.totalCount,
-            succRate: Math.round(d.data.successRate[0].avgSuccessRatio * 10000) / 100,
+            succRate: Math.round(d.data.successRate.avgSuccessRatio * 10000) / 100,
+            count1:d.data.count1,
+            count3: d.data.count3,
+            count5: d.data.count5,
+            count10: d.data.count10,
+            count99: d.data.count99,
           })
           // if(this.data.isFirst)
           if (that.data.isFirst) {
@@ -117,10 +130,18 @@ Page({
         xData.push(util.formatHm(d))
       }
 
+      this.data.d0 = this.getValidSeriesData(res.data.d0)
+      this.data.d1 = this.getValidSeriesData(res.data.d1)
+      this.data.d7 = this.getValidSeriesData(res.data.d7)
       var option = {
         title: {
           text: '转让笔数趋势图',
-          left: 'center'
+          left: 'center',
+          textStyle:{
+            color : '#000',
+            fontWeight:400,
+            fontSize:24,
+          }
         },
         legend: {
           data: ['今天', '昨天', '一周前'],
@@ -153,17 +174,17 @@ Page({
           name: '今天',
           type: 'line',
           smooth: true,
-          data: this.getValidSeriesData(res.data.d0)
+          data: this.data.d0
         }, {
           name: '昨天',
           type: 'line',
           smooth: true,
-          data: this.getValidSeriesData(res.data.d1)
+          data: this.data.d1
         }, {
           name: '一周前',
           type: 'line',
           smooth: true,
-          data: this.getValidSeriesData(res.data.d7)
+          data: this.data.d7
         }]
       };
       chart.setOption(option);
@@ -175,16 +196,11 @@ Page({
   },
 
   updateChart: function(d) {
+    this.data.d0 = this.getValidSeriesData(d.data.d0)
     var option = {
       series: [{
         name: '今天',
-        data: this.getValidSeriesData(d.data.d0)
-      }, {
-        name: '昨天',
-        data: this.getValidSeriesData(d.data.d1)
-      }, {
-        name: '一周前',
-        data: this.getValidSeriesData(d.data.d7)
+        data: this.data.d0
       }]
     };
 
@@ -194,7 +210,7 @@ Page({
   getValidSeriesData: function(ds) {
     let r = [];
     for (let x in ds) {
-      if (x.endsWith('0') || x.endsWith('5')) {
+      if (x.endsWith('0')) {
         r.push(ds[x])
       }
     }

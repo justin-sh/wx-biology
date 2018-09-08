@@ -36,6 +36,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    host:'https://www.zdic.cn/amz',
+    host: 'https://contest.lujs.cn/cashier',
+    hostBak: 'https://www.zdic.cn/amz',
   }
 })

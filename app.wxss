@@ -21,7 +21,7 @@ form{
 
 /* lib */
 .strong{
-  font-weight: bold;
+  font-weight: bolder;
 }
 .tc{
   text-align: center;
@@ -48,4 +48,10 @@ form{
   justify-content: center;
   align-items: center;
   margin-top: 20rpx;
+}
+
+.title{
+  font-weight: 400;
+  font-size: 150%;
+  color : '#000';
 }

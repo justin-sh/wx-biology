@@ -1,13 +1,44 @@
 <view class='container'>
   <view class='base-info'>
     <view class='row'>
-      <view>当前安E转让笔数 {{totalCount}} 笔</view>
+      <view>当前安E转让笔数
+        <text class='strong'>{{totalCount}}</text> 笔</view>
       <!-- <button size='mini' bindtap="goTest">Refresh</button> -->
     </view>
     <view class='row'>
-      <view>当前安E转让成功率 {{succRate}} %</view>
+      <view>当前安E转让成功率
+        <text class='strong'>{{succRate}}</text> %</view>
     </view>
   </view>
+  <view class='amount-part'>
+    <view class='title row'>按金额区间统计</view>
+    <view class='row'>
+      <text class='amt'>0 - 10,000</text>
+      <text class='val' wx:if="{{count1 == 0}}">无</text>
+      <text class='val' wx:else><text class='strong'>{{count1}}</text> 笔</text>
+    </view>
+    <view class='row'>
+      <text class='amt'>10,000 - 30,000</text>
+      <text class='val' wx:if="{{count3 == 0}}">无</text>
+      <text class='val' wx:else><text class='strong'>{{count3}}</text> 笔</text>
+    </view>
+    <view class='row'>
+      <text class='amt'>30,000 - 50,000</text>
+      <text class='val' wx:if="{{count5 == 0}}">无</text>
+      <text class='val' wx:else><text class='strong'>{{count5}}</text> 笔</text>
+    </view>
+    <view class='row'>
+      <text class='amt'>50,000 - 100,000</text>
+      <text class='val' wx:if="{{count10 == 0}}">无</text>
+      <text class='val' wx:else><text class='strong'>{{count10}}</text> 笔</text>
+    </view>
+    <view class='row'>
+      <text class='amt'>100,000 -1,000,000</text>
+      <text class='val' wx:if="{{count99 == 0}}">无</text>
+      <text class='val' wx:else><text class='strong'>{{count99}}</text> 笔</text>
+    </view>
+  </view>
+  <!-- <view class='title'>转让笔数趋势图</view> -->
   <view class='canvas'>
     <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
   </view>

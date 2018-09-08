@@ -1,10 +1,38 @@
+.base-info{
+  margin-top: 10rpx;
+  width: 100%;
+  background-color: #fff;
+}
+.amount-part{
+  margin-top: 20rpx; 
+  background-color: #fff;
+  width: 100%;
+}
+
 .canvas {
   margin-top: 20rpx; 
   width: 100%;
   height: 1000rpx;
+  background-color: #fff;
   /* position: absolute;
   top: 200rpx; 
   bottom: 0;
   left: 0;
   right: 0; */
+  /* border: 1px solid red */
+}
+
+ec-canvas{
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid blue */
+}
+
+.row .val{
+  /* justify-content: left; */
+  width: 30%;
+}
+.row .amt{
+  padding-left: 100rpx;
+  width: 70%;
 }
