@@ -203,8 +203,14 @@ Page({
         data: this.data.d0
       }]
     };
-
-    this.ec.chart.setOption(option);
+    if (this.ec.chart) {
+      this.ec.chart.setOption(option);
+    }else{
+      this.setData({
+        isFirst:true,
+      })
+      this.refreshData()
+    }
   },
 
   getValidSeriesData: function(ds) {
