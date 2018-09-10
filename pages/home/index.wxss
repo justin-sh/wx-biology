@@ -37,7 +37,8 @@ ec-canvas{
   width: 70%;
 }
 .foot{
-  margin-top: 20rpx;
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
   width:90%;
   text-align: right;
   color: lightgray;

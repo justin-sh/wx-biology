@@ -80,12 +80,12 @@ Page({
       url: `${opt.host}/lu/product-count?all=${first}&_=${+new Date}`,
       success: function(d) {
         // console.log(d)
-        d.ok = d.statusCode === 200;
+        d.ok = d.statusCode === 200 && typeof d.data !== 'string';
         if (d.ok) {
-          let avgSuccessRatio = d.data.successRates || d.data.successRate
+          var asr = d.data.successRates || d.data.successRate
           that.setData({
             totalCount: d.data.totalCount,
-            succRate: Math.round(avgSuccessRatio.avgSuccessRatio * 10000) / 100,
+            succRate: Math.round(asr.avgSuccessRatio * 10000) / 100,
             count1:d.data.count1,
             count3: d.data.count3,
             count5: d.data.count5,
@@ -103,8 +103,10 @@ Page({
               data: d.data
             });
           }
+        } else {
+          opt.host = app.globalData.hostBak
+          that.refreshData(opt)
         }
-
         if (typeof opt.success === 'function') {
           opt.success(d)
         }
