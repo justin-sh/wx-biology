@@ -73,22 +73,25 @@ Page({
     //   mask: true
     // })
     opt = opt || {}
+    opt.host = opt.host || app.globalData.host
     let first = this.data.isFirst;
     let that = this;
     wx.request({
-      url: `${app.globalData.host}/lu/product-count?all=${first}&_=${+new Date}`,
+      url: `${opt.host}/lu/product-count?all=${first}&_=${+new Date}`,
       success: function(d) {
         // console.log(d)
         d.ok = d.statusCode === 200;
         if (d.ok) {
+          let avgSuccessRatio = d.data.successRates || d.data.successRate
           that.setData({
             totalCount: d.data.totalCount,
-            succRate: Math.round(d.data.successRate.avgSuccessRatio * 10000) / 100,
+            succRate: Math.round(avgSuccessRatio.avgSuccessRatio * 10000) / 100,
             count1:d.data.count1,
             count3: d.data.count3,
             count5: d.data.count5,
             count10: d.data.count10,
             count99: d.data.count99,
+            updatedAt: d.data.updatedAt || util.formatHm(new Date())
           })
           // if(this.data.isFirst)
           if (that.data.isFirst) {
@@ -106,8 +109,14 @@ Page({
           opt.success(d)
         }
       },
-      complete: function() {
+      fail:function(e){
+        // console.log(opt,e)
+        opt.host = app.globalData.hostBak
+        that.refreshData(opt)
+      },
+      complete: function(e) {
         // wx.hideLoading()
+        // console.log(e)
         if (typeof opt.complete === 'function') {
           opt.complete();
         }

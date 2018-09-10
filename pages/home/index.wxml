@@ -42,4 +42,7 @@
   <view class='canvas'>
     <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
   </view>
+  <view class='foot'>
+    数据更新时间:{{updatedAt}}
+  </view>
 </view>

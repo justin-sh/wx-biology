@@ -36,3 +36,11 @@ ec-canvas{
   padding-left: 100rpx;
   width: 70%;
 }
+.foot{
+  margin-top: 20rpx;
+  width:90%;
+  text-align: right;
+  color: lightgray;
+  font-size: smaller;
+  /* border: 1px solid red; */
+}
