@@ -91,6 +91,8 @@ Page({
             count5: d.data.count5,
             count10: d.data.count10,
             count99: d.data.count99,
+            countOfOverdue: d.data.countOfOverdue || 0,
+            sumAmount: d.data.sumAmount || '-',
             updatedAt: d.data.updatedAt || util.formatHm(new Date())
           })
           // if(this.data.isFirst)

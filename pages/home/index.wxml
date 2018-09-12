@@ -6,6 +6,16 @@
       <!-- <button size='mini' bindtap="goTest">Refresh</button> -->
     </view>
     <view class='row'>
+      <view>当前安E转让逾期笔数
+        <text class='strong'>{{countOfOverdue}}</text> 笔</view>
+      <!-- <button size='mini' bindtap="goTest">Refresh</button> -->
+    </view>
+    <view class='row'>
+      <view>当前安E转让总金额
+        <text class='strong'>{{sumAmount}}</text> 元</view>
+      <!-- <button size='mini' bindtap="goTest">Refresh</button> -->
+    </view>
+    <view class='row'>
       <view>当前安E转让成功率
         <text class='strong'>{{succRate}}</text> %</view>
     </view>
