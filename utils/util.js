@@ -17,12 +17,13 @@ const formatHm = date => {
 
 const formatCommaNumber = n =>{
   n = (''+n).split('.')
-  t = n[0]
-  r=[]
-  for(let x=t.length-1;x>=0;x--){
-    r.push(t[x])
-    r.push((x+1)%3==0&&x!=0?',':'')
-    console.log(r)
+  let t = n[0]
+  let r=[]
+  let len = t.length
+  for (let x = 0; x < len;x++){
+    r.push(t[len - x -1])
+    r.push((x+1)%3==0&&x!=len-1?',':'')
+    // console.log(r)
   }
   return r.reverse().join('')+(n[1]?('.'+n[1]):'')
 }
@@ -35,5 +36,6 @@ const formatNumber = n => {
 module.exports = {
   formatTime: formatTime,
   formatHm: formatHm,
-  formatNumber: formatNumber
+  formatNumber: formatNumber,
+  formatCommaNumber: formatCommaNumber
 }
