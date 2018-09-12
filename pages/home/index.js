@@ -51,9 +51,11 @@ Page({
   },
 
   onShareAppMessage: function (res) {
+    // console.log(res)
     return {
       title: '陆投小帮手',
       path: '/pages/home/index',
+      imageUrl:'/img/qr.jpg',
       success: function () { },
       fail: function () { }
     }
